@@ -60,13 +60,22 @@ func closestMultipleOfSix(_ value: Int) -> Int {
 
 // capturing variables
 func gameCounter() -> ((Int) -> Void ){
+    
+    var localCounter = 0
+    
     func increment(_ i: Int) {
-        print("Integer passed in: \(i)")
+        localCounter += i
+        print("Integer passed in: \(i). Local counter value: \(localCounter)")
     }
     return increment
 }
 let counter = gameCounter()
-counter(1)
+counter(10)
+counter(20)
+
+let anotherCounter = gameCounter()
+anotherCounter(1)
+counter(5)
 
 
 //MARK: remove vowels func
