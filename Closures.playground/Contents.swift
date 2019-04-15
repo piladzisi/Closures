@@ -68,6 +68,8 @@ func gameCounter() -> ((Int) -> Void ){
 let counter = gameCounter()
 counter(1)
 
+
+//MARK: remove vowels func
 extension String{
     
     func transform(_ argument : (String) -> String) -> String {
