@@ -252,3 +252,60 @@ extension Array {
 
 let somePUsers = allUsers.customFilter { $0.username.first == "p" }
 print(somePUsers)
+
+
+// Reduce
+
+let scores = [10, 12, 11, 10, 12, 9]
+//var totalScore = 0
+
+//for score in scores {
+//    totalScore += score
+//}
+
+let totalScore = scores.reduce(0,  {total, score in total + score })
+extension Array {
+    func customReduce<Result>(_ initial: Result, _ nextPartialResult: (Result, Element) -> Result ) -> Result {
+        var result = initial
+        
+        for x in self {
+            result = nextPartialResult(result, x)
+        }
+        return result
+        }
+    }
+
+let dataSet = (1...100).filter { $0 % 3 == 0 && $0 % 7 == 0 }
+let identifier = dataSet.reduce("", {string, number in string + "\(number)" })
+print(identifier)
+
+let ages = [12,10,11,42,35,27,91,82,26,33,37,15]
+
+let total = ages.reduce(0, {total, age in total + age})
+
+extension Int {
+    func apply(_ value: Int, operation: (Int, Int) throws -> Int) rethrows -> Int {
+        return try operation(self, value)
+    }
+}
+//10.apply(12) { $0 + $1 }
+//10.apply(0) { $0/$1 }
+enum MathError: Error {
+    case divideByZero
+}
+do {
+    try 10.apply(0) {
+        if $1 == 0 {
+            throw MathError.divideByZero
+        } else {
+            return $0/$1
+        }
+    }
+} catch MathError.divideByZero {
+    print("Error")
+}
+10.apply(12) { $0 + $1 }
+
+[1,2].map { $0 }
+func someFunction(a: Int) throws {}
+func anotherFunction(a: Int) {}
