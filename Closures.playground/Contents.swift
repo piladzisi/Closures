@@ -232,3 +232,23 @@ let allUsers = [
 let validAddressess = allUsers.compactMap { $0.billingAddress }
 print(validAddressess)
 validAddressess.count
+
+//Filter
+
+let evenNumbers = (0...50).filter { $0 % 2 == 0}
+print(evenNumbers)
+
+
+extension Array {
+    func customFilter(_ isIncluded: (Element) -> Bool) -> [Element] {
+        var result = [Element]()
+        
+        for x in self where isIncluded(x){
+            result.append(x)
+        }
+        return result
+    }
+}
+
+let somePUsers = allUsers.customFilter { $0.username.first == "p" }
+print(somePUsers)
