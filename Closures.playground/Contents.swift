@@ -188,3 +188,47 @@ print(dates)
 
 let numbersTask = [1,2,3,4,5]
 let numberStrings = numbersTask.map { String($0) }
+// Flat Map
+struct Post {
+    var content: String
+    var tags: [String]
+}
+let blog = [
+    Post(content: "Hello, world", tags: ["first", "programming"]),
+    Post(content: "Another short post", tags: ["general", "short"])
+]
+
+let tags = blog.flatMap { $0.tags }
+print(tags)
+extension Array {
+    func customFlatMap<T>(_ transform: (Element) -> [T]) -> [T] {
+    var result = [T] ()
+    
+    for x in self{
+        result.append(contentsOf: transform(x))
+    }
+    return result
+    }
+}
+
+// Example 2
+
+import UIKit
+
+struct Account {
+    let username: String
+    let billingAddress: String?
+}
+
+
+let allUsers = [
+    Account(username: "pasanpr", billingAddress: nil),
+    Account(username: "benjakuben", billingAddress: "1234 Imaginary Street"),
+    Account(username: "instantNadel", billingAddress: "5678 Doesn't Live Here Dr."),
+    Account(username: "sketchings", billingAddress: nil),
+    Account(username: "paradoxed", billingAddress: "1122 Nope Lane")
+]
+
+let validAddressess = allUsers.compactMap { $0.billingAddress }
+print(validAddressess)
+validAddressess.count
