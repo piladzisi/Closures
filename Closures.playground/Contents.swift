@@ -146,3 +146,45 @@ numbers.map() { number -> Int in
 }
 //Rule #6: Ignoring Parenthesis
 numbers.map { $0 * 3 }
+//MARK: Standard Library Functions
+//imperative aproach step by step mutable result
+let values = [1,2,3,4,5]
+var newArray = Array<Int>()
+    for number in values {
+        newArray.append(number * 2)
+}
+//declarative aproach immutable result Yeay!
+let doubledNum = values.map { $0 * 2 }
+
+//Map
+extension Array {
+    func customMap<T>(_ transform: (Element) -> T) -> [T] {
+        var result = [T]()
+        
+        for x in self {
+            result.append(transform(x))
+        }
+        return result
+    }
+}
+
+let integerValues = ["1", "2", "3", "4", "5"].customMap { Int($0) }
+
+import Foundation
+
+struct Formatter {
+    static let formatter = DateFormatter()
+    
+    static func date(from string: String) -> Date? {
+        formatter.dateFormat = "d MMM yyy"
+        return formatter.date(from: string)
+    }
+}
+
+let dateStrings = ["20 Oct 1978", "11 Jan 1947", "28 March 2012"]
+
+let dates = dateStrings.customMap { Formatter.date(from: $0)}
+print(dates)
+
+let numbersTask = [1,2,3,4,5]
+let numberStrings = numbersTask.map { String($0) }
