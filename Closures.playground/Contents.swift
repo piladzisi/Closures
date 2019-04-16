@@ -100,3 +100,16 @@ func removeVowels(from value: String) -> String {
 }
 
 let resultVar = "Hello, World!".transform(removeVowels)
+
+
+//MARK: Closure expressions
+func doubleMe(_ value: Int) -> Int {
+    return value * 2
+}
+
+let doubleFunc = doubleMe
+doubleFunc(2)
+
+let numbers = [1,2,3,4]
+
+let doubledNumbers = numbers.map(doubleFunc)
