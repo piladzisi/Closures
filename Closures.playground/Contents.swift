@@ -309,3 +309,50 @@ do {
 [1,2].map { $0 }
 func someFunction(a: Int) throws {}
 func anotherFunction(a: Int) {}
+
+// Memory Considerations
+
+class NetworkSessionManager {
+    typealias CompletionHandler = () -> Void
+    
+    var completionHandlers: [CompletionHandler] = []
+    
+    func dataTask(with handler: @escaping CompletionHandler) {
+        completionHandlers.append(handler)
+    }
+}
+
+//Reference Cycles
+class Fibonacci {
+    var value: Int
+    
+    init(value: Int) {
+        self.value = value
+    }
+    
+    lazy var fibonacci: () -> Int = { [unowned self] in // capture list
+        // Some temporary variables.
+        var a = 0
+        var b = 1
+        
+        // Add up numbers to the desired iteration.
+        for _ in 0..<self.value {
+            let temp = a
+            a = b
+            b = temp + b
+        }
+        
+        return a
+    }
+    
+    deinit {
+        print("\(value) is being deinitialized. Memory deallocated")
+    }
+}
+
+let f = Fibonacci(value: 7)
+f.fibonacci()
+
+var t: Fibonacci? = Fibonacci(value: 8)
+t?.fibonacci()
+t = nil
